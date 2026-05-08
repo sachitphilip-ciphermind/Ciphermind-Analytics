@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CipherMind Analytics — Intelligent Technology. Measurable Outcomes.</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:       #0A0812;
+  --abyss:      #0F0C1A;
+  --deep:       #140F26;
+  --layer:      #1C1530;
+  --card:       #211940;
+  --border:     rgba(108, 63, 197, 0.18);
+  --border2:    rgba(108, 63, 197, 0.35);
+  --violet:     #6C3FC5;
+  --purple:     #8B52E8;
+  --lavender:   #A87EF0;
+  --electric:   #B66EFF;
+  --indigo:     #4B2D9E;
+  --deep-purple:#2D1A6E;
+  --glow:       rgba(108, 63, 197, 0.4);
+  --glow-soft:  rgba(138, 82, 232, 0.15);
+  --text:       #EAE6F8;
+  --text2:      #C4BAE8;
+  --muted:      #7A6FA8;
+  --muted2:     #4A4370;
+  --white:      #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--void);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--electric);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(182, 110, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.15s ease;
+}
+
+/* ── ANIMATED MESH BG ── */
+.mesh-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.mesh-bg::before {
+  content: '';
+  position: absolute;
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, rgba(108,63,197,0.25) 0%, transparent 65%);
+  top: -300px; right: -200px;
+  animation: meshFloat1 18s ease-in-out infinite;
+}
+.mesh-bg::after {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(75,45,158,0.2) 0%, transparent 65%);
+  bottom: -200px; left: -150px;
+  animation: meshFloat2 22s ease-in-out infinite;
+}
+.mesh-orb3 {
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(168,126,240,0.12) 0%, transparent 70%);
+  top: 40%; left: 30%;
+  animation: meshFloat3 26s ease-in-out infinite;
+}
+@keyframes meshFloat1 {
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(-80px,60px) scale(1.1)}
+  66%{transform:translate(40px,-40px) scale(0.95)}
+}
+@keyframes meshFloat2 {
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(60px,-80px) scale(1.15)}
+}
+@keyframes meshFloat3 {
+  0%,100%{transform:translate(0,0)}
+  40%{transform:translate(-60px,80px)}
+  80%{transform:translate(80px,-40px)}
+}
+
+/* ── SCANLINE OVERLAY ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9990;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 56px;
+  background: rgba(10, 8, 18, 0.75);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--indigo), var(--violet), var(--purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-logo-icon svg {
+  width: 18px; height: 18px;
+  fill: white;
+}
+.nav-logo-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+.nav-logo-text span { color: var(--electric); }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--electric);
+  transform: scaleX(0);
+  transition: transform 0.25s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  background: linear-gradient(135deg, var(--violet), var(--purple));
+  color: white !important;
+  padding: 9px 22px;
+  border-radius: 6px;
+  font-weight: 600 !important;
+  transition: all 0.25s !important;
+  box-shadow: 0 0 20px rgba(108,63,197,0.4);
+}
+.nav-cta:hover {
+  box-shadow: 0 0 35px rgba(108,63,197,0.7) !important;
+  transform: translateY(-1px);
+}
+.nav-cta::after { display: none !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 56px 60px;
+  position: relative;
+  z-index: 1;
+  gap: 60px;
+}
+
+/* Grid lines */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(108,63,197,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108,63,197,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 20%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero-left { position: relative; z-index: 2; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--electric);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  padding: 7px 16px;
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  background: rgba(108,63,197,0.08);
+}
+.hero-badge-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--electric);
+  box-shadow: 0 0 8px var(--electric);
+  animation: blink 1.8s infinite;
+}
+@keyframes blink {
+  0%,100%{opacity:1} 50%{opacity:0.2}
+}
+
+.hero h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+.hero h1 .line1 { color: var(--text); display: block; }
+.hero h1 .line2 { color: var(--text); display: block; }
+.hero h1 .line3 {
+  display: block;
+  background: linear-gradient(90deg, var(--violet) 0%, var(--electric) 50%, var(--lavender) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradShift 5s ease infinite;
+  background-size: 200%;
+}
+@keyframes gradShift {
+  0%,100%{background-position:0%}
+  50%{background-position:100%}
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 500px;
+  margin-bottom: 44px;
+  font-weight: 300;
+}
+
+.hero-btns { display: flex; gap: 14px; }
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+  color: white;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 0 0 30px rgba(108,63,197,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.4s;
+}
+.btn-glow:hover::before { left: 100%; }
+.btn-glow:hover {
+  box-shadow: 0 0 50px rgba(108,63,197,0.8), inset 0 1px 0 rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--lavender);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  transition: all 0.3s;
+}
+.btn-outline:hover {
+  background: rgba(108,63,197,0.12);
+  border-color: var(--violet);
+  box-shadow: 0 0 20px rgba(108,63,197,0.2);
+}
+
+/* Hero right — tech visual */
+.hero-visual {
+  position: relative;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.hero-sphere {
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    rgba(168,126,240,0.3) 0%,
+    rgba(108,63,197,0.2) 30%,
+    rgba(45,26,110,0.4) 60%,
+    rgba(10,8,18,0.6) 100%
+  );
+  border: 1px solid rgba(108,63,197,0.3);
+  box-shadow:
+    0 0 80px rgba(108,63,197,0.3),
+    0 0 160px rgba(108,63,197,0.15),
+    inset 0 0 80px rgba(45,26,110,0.5);
+  position: relative;
+  animation: spherePulse 6s ease-in-out infinite;
+}
+@keyframes spherePulse {
+  0%,100%{box-shadow:0 0 80px rgba(108,63,197,0.3),0 0 160px rgba(108,63,197,0.15),inset 0 0 80px rgba(45,26,110,0.5)}
+  50%{box-shadow:0 0 120px rgba(108,63,197,0.5),0 0 240px rgba(108,63,197,0.2),inset 0 0 100px rgba(45,26,110,0.6)}
+}
+/* Ring orbits */
+.orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(108,63,197,0.25);
+  top: 50%; left: 50%;
+  transform-origin: center;
+}
+.orbit1 {
+  width: 380px; height: 380px;
+  margin: -190px 0 0 -190px;
+  animation: spin1 20s linear infinite;
+}
+.orbit2 {
+  width: 460px; height: 460px;
+  margin: -230px 0 0 -230px;
+  animation: spin2 32s linear infinite reverse;
+  border-style: dashed;
+  border-color: rgba(108,63,197,0.12);
+}
+.orbit3 {
+  width: 540px; height: 540px;
+  margin: -270px 0 0 -270px;
+  animation: spin1 45s linear infinite;
+  border-color: rgba(108,63,197,0.08);
+}
+@keyframes spin1 { to{transform:rotate(360deg)} }
+@keyframes spin2 { to{transform:rotate(-360deg)} }
+
+/* Orbit dots */
+.orbit-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--electric);
+  box-shadow: 0 0 12px var(--electric), 0 0 24px rgba(182,110,255,0.5);
+  top: -4px; left: calc(50% - 4px);
+}
+.orbit-dot2 {
+  background: var(--lavender);
+  box-shadow: 0 0 10px var(--lavender);
+  width: 6px; height: 6px;
+  top: calc(50% - 3px); right: -3px; left: auto;
+}
+
+/* Floating tech cards */
+.float-card {
+  position: absolute;
+  background: rgba(33, 25, 64, 0.9);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  backdrop-filter: blur(16px);
+  animation: floatY 4s ease-in-out infinite;
+}
+.float-card:nth-child(3) { top: 40px; right: 20px; animation-delay: 0s; }
+.float-card:nth-child(4) { bottom: 80px; left: 0px; animation-delay: -2s; }
+.float-card:nth-child(5) { top: 180px; left: -10px; animation-delay: -1s; }
+@keyframes floatY {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+.float-card-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.float-card-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--electric);
+}
+.float-card-sub { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+/* ── SECTION BASE ── */
+section { position: relative; z-index: 1; padding: 100px 56px; }
+.sec-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--violet);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-label::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--violet);
+}
+.sec-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.sec-sub {
+  font-size: 0.95rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+.sec-header { margin-bottom: 56px; }
+
+/* ── INDUSTRIES ── */
+.industries {
+  background: var(--abyss);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 56px;
+}
+.ind-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ind-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  color: var(--muted2);
+  text-transform: uppercase;
+  margin-right: 14px;
+  white-space: nowrap;
+}
+.ind-chip {
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.25s;
+  background: rgba(108,63,197,0.04);
+  letter-spacing: 0.02em;
+}
+.ind-chip:hover, .ind-chip.active {
+  border-color: var(--violet);
+  color: var(--lavender);
+  background: rgba(108,63,197,0.12);
+  box-shadow: 0 0 14px rgba(108,63,197,0.2);
+}
+
+/* ── SERVICES ── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.svc-card {
+  background: var(--abyss);
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.svc-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,63,197,0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.svc-card:hover { background: var(--layer); }
+.svc-card:hover::before { opacity: 1; }
+.svc-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--muted2);
+  margin-bottom: 20px;
+}
+.svc-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  position: relative;
+}
+.svc-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.svc-card p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+.svc-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.svc-tag {
+  font-size: 0.68rem;
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(108,63,197,0.12);
+  border: 1px solid rgba(108,63,197,0.25);
+  color: var(--lavender);
+}
+.svc-arrow {
+  position: absolute;
+  bottom: 28px; right: 28px;
+  font-size: 1.2rem;
+  color: var(--border2);
+  transition: all 0.3s;
+  font-family: monospace;
+}
+.svc-card:hover .svc-arrow {
+  color: var(--electric);
+  transform: translate(3px, -3px);
+}
+
+/* Full-width 5th service */
+.svc-card.wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 40px;
+  padding: 36px 40px;
+}
+.svc-card.wide .svc-body { }
+.svc-card.wide .svc-caps {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 340px;
+  justify-content: flex-end;
+}
+.svc-cap-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text2);
+  white-space: nowrap;
+}
+.svc-cap-item::before {
+  content: '▸';
+  color: var(--violet);
+  font-size: 0.7rem;
+}
+
+/* ── WHY ── */
+.why { background: var(--abyss); }
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+.why-card {
+  background: var(--layer);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 30px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.why-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--indigo), var(--electric));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.why-card:hover { border-color: rgba(108,63,197,0.4); transform: translateY(-4px); }
+.why-card:hover::after { transform: scaleX(1); }
+.why-icon {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(182,110,255,0.4));
+}
+.why-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+.why-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+/* ── DELIVERY PRACTICES ── */
+.delivery-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.del-card {
+  background: var(--layer);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.del-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(108,63,197,0.15); }
+.del-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  font-weight: 900;
+  position: absolute;
+  top: 8px; right: 16px;
+  color: rgba(108,63,197,0.08);
+  line-height: 1;
+}
+.del-tag {
+  display: inline-block;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violet);
+  background: rgba(108,63,197,0.1);
+  border: 1px solid rgba(108,63,197,0.2);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.del-card h4 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+.del-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+/* ── TECH PLATFORMS ── */
+.tech { background: var(--abyss); padding: 60px 56px; border-top: 1px solid var(--border); }
+.tech-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-align: center;
+  margin-bottom: 32px;
+}
+.tech-row {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tech-item {
+  flex: 1;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border-right: 1px solid var(--border);
+  background: var(--layer);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tech-item:last-child { border-right: none; }
+.tech-item:hover {
+  background: rgba(108,63,197,0.1);
+}
+.tech-item:hover .tech-icon { filter: drop-shadow(0 0 10px rgba(182,110,255,0.5)); }
+.tech-icon { font-size: 1.8rem; transition: filter 0.2s; }
+.tech-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ── TEAM ── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.team-card {
+  background: var(--layer);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.team-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(108,63,197,0.2);
+}
+.team-avatar {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 900;
+  position: relative;
+  overflow: hidden;
+}
+.team-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--layer));
+}
+.team-info { padding: 18px 20px 22px; }
+.team-info h4 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+.team-role {
+  font-size: 0.72rem;
+  color: var(--electric);
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+}
+.team-bio { font-size: 0.76rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+/* ── TESTIMONIALS ── */
+.testi { background: var(--abyss); }
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.testi-card {
+  background: var(--layer);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.testi-card:hover { border-color: var(--border2); box-shadow: 0 12px 40px rgba(108,63,197,0.15); }
+.testi-quote-mark {
+  position: absolute;
+  top: 16px; right: 24px;
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  font-weight: 900;
+  color: rgba(108,63,197,0.15);
+  line-height: 1;
+}
+.testi-stars { color: #FFB323; font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 16px; }
+.testi-card blockquote {
+  font-size: 0.88rem;
+  color: var(--text2);
+  line-height: 1.75;
+  margin-bottom: 24px;
+  font-style: italic;
+  font-weight: 300;
+}
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.testi-av {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+.testi-av-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.testi-av-role { font-size: 0.72rem; color: var(--muted); }
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  background: linear-gradient(135deg, var(--deep-purple) 0%, rgba(45,26,110,0.6) 50%, var(--deep) 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: 100px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 100% at 50% 50%, rgba(108,63,197,0.2) 0%, transparent 70%);
+}
+.cta-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(108,63,197,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108,63,197,0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.cta-banner h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+.cta-banner h2 span {
+  background: linear-gradient(90deg, var(--violet), var(--electric));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cta-banner p { font-size: 1rem; color: var(--muted); max-width: 460px; margin: 0 auto 40px; line-height: 1.7; position: relative; z-index: 1; font-weight: 300; }
+.cta-banner .btns { display: flex; gap: 14px; justify-content: center; position: relative; z-index: 1; }
+
+/* ── CONTACT ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.contact-form-wrap {
+  background: var(--layer);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: rgba(108,63,197,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: all 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--violet);
+  background: rgba(108,63,197,0.1);
+  box-shadow: 0 0 0 3px rgba(108,63,197,0.1);
+}
+.form-group textarea { height: 110px; resize: none; }
+.form-group select option { background: var(--deep); }
+
+.contact-info h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.contact-info > p { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 40px; font-weight: 300; }
+.contact-detail {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.cd-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(108,63,197,0.12);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.cd-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 4px;
+}
+.cd-val { font-size: 0.88rem; color: var(--text2); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--abyss);
+  border-top: 1px solid var(--border);
+  padding: 72px 56px 36px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 60px;
+  margin-bottom: 56px;
+}
+.footer-brand-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+  display: block;
+}
+.footer-brand-name span { color: var(--electric); }
+.footer-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 24px; font-weight: 300; }
+.social-links { display: flex; gap: 10px; }
+.social-link {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--layer);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.social-link:hover { border-color: var(--violet); color: var(--electric); box-shadow: 0 0 12px rgba(108,63,197,0.3); }
+.footer-col h5 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul a {
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 300;
+}
+.footer-col ul a:hover { color: var(--lavender); }
+.footer-contact-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 12px; }
+.footer-contact-row .i { color: var(--violet); font-size: 0.75rem; flex-shrink: 0; margin-top: 1px; }
+.footer-contact-row span { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-bottom p { font-size: 0.78rem; color: var(--muted2); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 0.78rem; color: var(--muted2); text-decoration: none; transition: color 0.2s; }
+.footer-legal a:hover { color: var(--lavender); }
+
+/* ── PAGE NAV ── */
+.page-dots {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pd {
+  width: 5px; height: 5px;
+  border-radius: 3px;
+  background: var(--muted2);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.pd.on {
+  background: var(--electric);
+  height: 20px;
+  box-shadow: 0 0 8px var(--electric);
+}
+
+/* ── REVEAL ANIM ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal:nth-child(3) { transition-delay: 0.16s; }
+.reveal:nth-child(4) { transition-delay: 0.24s; }
+.reveal:nth-child(5) { transition-delay: 0.32s; }
+
+/* Avatar gradients */
+.av-a { background: linear-gradient(135deg, #4B2D9E, #8B52E8); }
+.av-b { background: linear-gradient(135deg, #1A6B9E, #2AB8D4); }
+.av-c { background: linear-gradient(135deg, #1E5A3F, #2E9B6E); }
+.av-d { background: linear-gradient(135deg, #6B2D4E, #C44B8B); }
+.av-e { background: linear-gradient(135deg, #6B4B1E, #C49B2E); }
+.av-f { background: linear-gradient(135deg, #1E3A6B, #2E6BC4); }
+.av-g { background: linear-gradient(135deg, #4B1E6B, #8B2EC4); }
+.av-h { background: linear-gradient(135deg, #1E6B4B, #2EC49B); }
+
+/* Svc icon colors */
+.ic-1 { background: rgba(108,63,197,0.12); border: 1px solid rgba(108,63,197,0.25); }
+.ic-2 { background: rgba(26,107,158,0.12); border: 1px solid rgba(26,107,158,0.25); }
+.ic-3 { background: rgba(255,100,60,0.1); border: 1px solid rgba(255,100,60,0.2); }
+.ic-4 { background: rgba(255,183,35,0.1); border: 1px solid rgba(255,183,35,0.2); }
+.ic-5 { background: rgba(139,82,232,0.12); border: 1px solid rgba(139,82,232,0.3); }
+
+/* Prototype badge */
+.proto-badge {
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  background: rgba(108,63,197,0.2);
+  border: 1px solid var(--border2);
+  color: var(--lavender);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 100px;
+  backdrop-filter: blur(12px);
+  z-index: 400;
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curRing"></div>
+
+<!-- MESH BG -->
+<div class="mesh-bg"><div class="mesh-orb3"></div></div>
+
+<!-- PAGE DOTS -->
+<div class="page-dots">
+  <div class="pd on" onclick="scrollTo(0)"></div>
+  <div class="pd" onclick="scrollTo(1)"></div>
+  <div class="pd" onclick="scrollTo(2)"></div>
+  <div class="pd" onclick="scrollTo(3)"></div>
+  <div class="pd" onclick="scrollTo(4)"></div>
+  <div class="pd" onclick="scrollTo(5)"></div>
+  <div class="pd" onclick="scrollTo(6)"></div>
+</div>
+
+<!-- PROTOTYPE BADGE -->
+<div class="proto-badge">Design Prototype v2.0</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2L4 8v4l8 6 8-6V8L12 2z"/></svg>
+    </div>
+    <span class="nav-logo-text">Cipher<span>Mind</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#practices">Practices</a></li>
+    <li><a href="#about">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><span class="hero-badge-dot"></span>IT Services &amp; Consulting — Est. 2024</div>
+    <h1>
+      <span class="line1">Intelligent</span>
+      <span class="line2">Technology.</span>
+      <span class="line3">Measurable Outcomes.</span>
+    </h1>
+    <p class="hero-sub">CipherMind Analytics empowers businesses with intelligent applications, actionable analytics, Power BI reporting, and Salesforce platforms — engineered for growth, built to scale.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-glow">Schedule Consultation →</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="orbit orbit3"></div>
+    <div class="orbit orbit2"></div>
+    <div class="orbit orbit1"><div class="orbit-dot"></div><div class="orbit-dot2"></div></div>
+    <div class="hero-sphere"></div>
+    <!-- Floating cards -->
+    <div class="float-card">
+      <div class="float-card-label">Experience</div>
+      <div class="float-card-val">14+</div>
+      <div class="float-card-sub">Years in enterprise tech</div>
+    </div>
+    <div class="float-card">
+      <div class="float-card-label">Service Areas</div>
+      <div class="float-card-val">05</div>
+      <div class="float-card-sub">Core practice areas</div>
+    </div>
+    <div class="float-card">
+      <div class="float-card-label">Team Strength</div>
+      <div class="float-card-val">08</div>
+      <div class="float-card-sub">Senior specialists</div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<div class="industries" id="industries">
+  <div class="ind-row">
+    <span class="ind-label">Sectors //</span>
+    <div class="ind-chip active">Financial Services</div>
+    <div class="ind-chip">Healthcare &amp; Life Sciences</div>
+    <div class="ind-chip">Retail &amp; E-Commerce</div>
+    <div class="ind-chip">Manufacturing</div>
+    <div class="ind-chip">Professional Services</div>
+    <div class="ind-chip">Startups &amp; SaaS</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-header">
+    <div class="sec-label">What We Build</div>
+    <h2 class="sec-title">Core Service Areas</h2>
+    <p class="sec-sub">Five focused practices. Deep specialists. End-to-end ownership of every engagement.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card reveal">
+      <div class="svc-num">// 01</div>
+      <div class="svc-icon-wrap ic-1">📱</div>
+      <h3>Mobile Application Platforms</h3>
+      <p>High-performance iOS and Android applications engineered for long-term scalability. Full lifecycle from architecture to App Store deployment.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">iOS</span>
+        <span class="svc-tag">Android</span>
+        <span class="svc-tag">Cross-Platform</span>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">// 02</div>
+      <div class="svc-icon-wrap ic-2">⚙️</div>
+      <h3>CRM &amp; Enterprise Platforms</h3>
+      <p>Salesforce and ServiceNow implementations built around your actual workflows — connected to ERP, analytics, and operational systems.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">Salesforce</span>
+        <span class="svc-tag">ServiceNow</span>
+        <span class="svc-tag">ERP</span>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">// 03</div>
+      <div class="svc-icon-wrap ic-3">📊</div>
+      <h3>Data Analytics &amp; BI</h3>
+      <p>Power BI dashboards, data warehouses, and cloud analytics delivering real-time visibility into the metrics that matter most.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">Power BI</span>
+        <span class="svc-tag">Azure</span>
+        <span class="svc-tag">SQL</span>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-num">// 04</div>
+      <div class="svc-icon-wrap ic-4">🌐</div>
+      <h3>Web Application Technologies</h3>
+      <p>Secure, scalable, maintainable web applications using modern frameworks. Production-ready architecture designed for long-term growth.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">React</span>
+        <span class="svc-tag">Angular</span>
+        <span class="svc-tag">Cloud</span>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    <div class="svc-card wide reveal">
+      <div>
+        <div class="svc-num">// 05</div>
+        <div class="svc-icon-wrap ic-5">🤖</div>
+      </div>
+      <div class="svc-body">
+        <h3>AI &amp; Emerging Technologies</h3>
+        <p>Machine learning models, predictive analytics, and intelligent automation pipelines integrated directly into your operational workflows — measurable impact, not just demos.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">ML / AI</span>
+          <span class="svc-tag">Predictive Analytics</span>
+          <span class="svc-tag">Automation</span>
+          <span class="svc-tag">LLM Integration</span>
+        </div>
+      </div>
+      <div class="svc-caps">
+        <div class="svc-cap-item">Model Development</div>
+        <div class="svc-cap-item">Predictive Analytics</div>
+        <div class="svc-cap-item">Process Automation</div>
+        <div class="svc-cap-item">AI Applications</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="sec-header">
+    <div class="sec-label">Differentiators</div>
+    <h2 class="sec-title">Why CipherMind Analytics</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <span class="why-icon">🎯</span>
+      <h3>Technical Depth</h3>
+      <p>Specialists across analytics, CRM, mobile, and AI — every engagement led by practitioners who have delivered at enterprise scale.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">📈</span>
+      <h3>Business Alignment</h3>
+      <p>Solutions built around your outcomes, not just technology. We define KPIs before writing the first line of code.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">✅</span>
+      <h3>Delivery Confidence</h3>
+      <p>Agile methodology, transparent communication, and predictable timelines. You will always know exactly where the project stands.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY PRACTICES -->
+<section id="practices">
+  <div class="sec-header">
+    <div class="sec-label">How We Deliver</div>
+    <h2 class="sec-title">Development &amp; Delivery Practices</h2>
+    <p class="sec-sub">Consistent quality and predictable outcomes through industry best practices at every stage.</p>
+  </div>
+  <div class="delivery-row">
+    <div class="del-card reveal">
+      <div class="del-num">01</div>
+      <span class="del-tag">Process</span>
+      <h4>Agile &amp; Iterative Development</h4>
+      <p>2-week sprint cycles with continuous stakeholder collaboration, demos, and retrospectives for full delivery visibility.</p>
+    </div>
+    <div class="del-card reveal">
+      <div class="del-num">02</div>
+      <span class="del-tag">Architecture</span>
+      <h4>CI/CD-Ready Architecture</h4>
+      <p>Automated builds, testing, and deployment pipelines ensuring faster, safer, and more reliable release cycles.</p>
+    </div>
+    <div class="del-card reveal">
+      <div class="del-num">03</div>
+      <span class="del-tag">Quality</span>
+      <h4>Quality Assurance &amp; Testing</h4>
+      <p>Functional, integration, regression, performance, and security testing integrated at every development stage.</p>
+    </div>
+    <div class="del-card reveal">
+      <div class="del-num">04</div>
+      <span class="del-tag">Handover</span>
+      <h4>Documentation &amp; Knowledge Transfer</h4>
+      <p>Clear technical docs, handover sessions, and team training ensuring long-term maintainability without vendor lock-in.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TECH PLATFORMS -->
+<div class="tech">
+  <div class="tech-title">// Technology Partners &amp; Platforms //</div>
+  <div class="tech-row">
+    <div class="tech-item"><span class="tech-icon">📊</span><span class="tech-name">Power BI</span></div>
+    <div class="tech-item"><span class="tech-icon">☁️</span><span class="tech-name">Salesforce</span></div>
+    <div class="tech-item"><span class="tech-icon">🔷</span><span class="tech-name">MS Azure</span></div>
+    <div class="tech-item"><span class="tech-icon">🟠</span><span class="tech-name">AWS</span></div>
+    <div class="tech-item"><span class="tech-icon">📱</span><span class="tech-name">iOS / Android</span></div>
+    <div class="tech-item"><span class="tech-icon">🔧</span><span class="tech-name">ServiceNow</span></div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<section id="about">
+  <div class="sec-header">
+    <div class="sec-label">Our People</div>
+    <h2 class="sec-title">Leadership &amp; Core Team</h2>
+    <p class="sec-sub">Eight senior specialists across analytics, engineering, CRM, AI, mobile, design, and growth.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar av-a">SP</div>
+      <div class="team-info">
+        <h4>Sachit Philip</h4>
+        <div class="team-role">// Founder &amp; Lead Consultant</div>
+        <p class="team-bio">14+ yrs across software, data analytics, AI, mobile, CRM, and enterprise delivery leadership.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar av-b">ND</div>
+      <div class="team-info">
+        <h4>Nineesh Das</h4>
+        <div class="team-role">// Head of Technology</div>
+        <p class="team-bio">14+ yrs in mobile, web, cloud architecture, Azure/AWS, and CI/CD pipeline design.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar av-c">SN</div>
+      <div class="team-info">
+        <h4>Sandesh Nandagawe</h4>
+        <div class="team-role">// Senior Data Consultant</div>
+        <p class="team-bio">15+ yrs in enterprise data, Power BI, SQL optimization, and cloud analytics platforms.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar av-d">SM</div>
+      <div class="team-info">
+        <h4>Sojo Mathai</h4>
+        <div class="team-role">// App Development Head</div>
+        <p class="team-bio">Sets technical vision for iOS and Android mobile engineering across complex industry platforms.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar av-e">SA</div>
+      <div class="team-info">
+        <h4>Sabique</h4>
+        <div class="team-role">// Design Head</div>
+        <p class="team-bio">UX strategy and visual design ensuring every product is intuitive and brand-aligned.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar av-f">SJ</div>
+      <div class="team-info">
+        <h4>Sajan</h4>
+        <div class="team-role">// Business Development Head</div>
+        <p class="team-bio">Enterprise technology sales and strategic partnerships bridging client needs with capability.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar av-g">MF</div>
+      <div class="team-info">
+        <h4>Mohammed Fawaz</h4>
+        <div class="team-role">// AI &amp; Data Consultant</div>
+        <p class="team-bio">6+ yrs at Fortune 500 including Cardinal Health and e2open. MSc Computer Science.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar av-h">NP</div>
+      <div class="team-info">
+        <h4>Navin Philip</h4>
+        <div class="team-role">// ServiceNow Consultant</div>
+        <p class="team-bio">ServiceNow ITSM specialist in workflow automation and enterprise service management.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="sec-header">
+    <div class="sec-label">Client Voices</div>
+    <h2 class="sec-title">What Our Clients Say</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-quote-mark">"</div>
+      <div class="testi-stars">★★★★★</div>
+      <blockquote>"CipherMind transformed our fragmented data landscape into a unified Power BI platform. Leadership now has real-time visibility that simply did not exist before."</blockquote>
+      <div class="testi-author">
+        <div class="testi-av av-a">VP</div>
+        <div>
+          <div class="testi-av-name">VP of Operations</div>
+          <div class="testi-av-role">Financial Services Firm</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-quote-mark">"</div>
+      <div class="testi-stars">★★★★★</div>
+      <blockquote>"Their Salesforce implementation was the most business-aligned CRM rollout we've ever experienced. They mapped our actual processes before writing a single flow."</blockquote>
+      <div class="testi-author">
+        <div class="testi-av av-b">CTO</div>
+        <div>
+          <div class="testi-av-name">Chief Technology Officer</div>
+          <div class="testi-av-role">Healthcare Technology Co.</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-quote-mark">"</div>
+      <div class="testi-stars">★★★★★</div>
+      <blockquote>"From mobile architecture to App Store launch, the team owned the full delivery cycle. Predictable timelines, transparent communication throughout."</blockquote>
+      <div class="testi-author">
+        <div class="testi-av av-e">CEO</div>
+        <div>
+          <div class="testi-av-name">Founder &amp; CEO</div>
+          <div class="testi-av-role">Series A E-Commerce Startup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready to <span>Transform</span><br>Your Business?</h2>
+  <p>Let's discuss how CipherMind Analytics can help you build smarter systems, better data, and scalable technology.</p>
+  <div class="btns">
+    <a href="#contact" class="btn-glow">Schedule a Consultation →</a>
+    <a href="#" class="btn-outline">View Case Studies</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-header">
+    <div class="sec-label">Get In Touch</div>
+    <h2 class="sec-title">Contact Us</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-form-wrap">
+      <div style="margin-bottom:28px">
+        <div style="font-family:'Orbitron',monospace;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:6px;letter-spacing:0.02em">Send Us a Message</div>
+        <div style="font-size:0.82rem;color:var(--muted)">We respond within 1 business day.</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name *</label><input type="text" placeholder="Your name"></div>
+        <div class="form-group"><label>Company *</label><input type="text" placeholder="Your company"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Email *</label><input type="email" placeholder="you@company.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 (xxx) xxx-xxxx"></div>
+      </div>
+      <div class="form-group"><label>Service of Interest *</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Mobile Application Platforms</option>
+          <option>CRM &amp; Enterprise Platforms</option>
+          <option>Data Analytics &amp; BI</option>
+          <option>Web Application Technologies</option>
+          <option>AI &amp; Emerging Technologies</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message *</label><textarea placeholder="Tell us about your project or challenge..."></textarea></div>
+      <button class="btn-glow" style="width:100%;justify-content:center;border:none;cursor:pointer;padding:15px" id="submitBtn">Send Message →</button>
+    </div>
+    <div class="contact-info">
+      <h3>Let's Build Something Impactful Together</h3>
+      <p>Whether you're exploring options or ready to start, we welcome the conversation. Our team is based in Michigan and serves clients across North America.</p>
+      <div class="contact-detail"><div class="cd-icon">📍</div><div><div class="cd-label">Address</div><div class="cd-val">44470 Bayview Ave, Clinton Township, MI 48038</div></div></div>
+      <div class="contact-detail"><div class="cd-icon">📞</div><div><div class="cd-label">Phone</div><div class="cd-val">+1-248-688-7088</div></div></div>
+      <div class="contact-detail"><div class="cd-icon">✉️</div><div><div class="cd-label">Email</div><div class="cd-val">contact@ciphermindanalytics.com</div></div></div>
+      <div class="contact-detail"><div class="cd-icon">🕐</div><div><div class="cd-label">Hours</div><div class="cd-val">Monday – Friday, 9:00 AM – 6:00 PM EST</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-name">Cipher<span>Mind</span> Analytics</span>
+      <p class="footer-desc">Technology-driven IT services and consulting specializing in data analytics, enterprise platforms, and custom application development.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">𝕏</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#">Mobile App Platforms</a></li>
+        <li><a href="#">CRM &amp; Enterprise</a></li>
+        <li><a href="#">Data Analytics &amp; BI</a></li>
+        <li><a href="#">Web Applications</a></li>
+        <li><a href="#">AI &amp; Emerging Tech</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Blog / Insights</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Dev &amp; Delivery</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <div class="footer-contact-row"><span class="i">◆</span><span>44470 Bayview Ave, Clinton Township, MI 48038</span></div>
+      <div class="footer-contact-row"><span class="i">◆</span><span>+1-248-688-7088</span></div>
+      <div class="footer-contact-row"><span class="i">◆</span><span>contact@ciphermindanalytics.com</span></div>
+      <div class="footer-contact-row"><span class="i">◆</span><span>Mon–Fri, 9AM–6PM EST</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 CipherMind Analytics LLC. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Copyright Notice</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cur = document.getElementById('cur');
+  const ring = document.getElementById('curRing');
+  document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX - 5 + 'px';
+    cur.style.top = e.clientY - 5 + 'px';
+    ring.style.left = e.clientX - 18 + 'px';
+    ring.style.top = e.clientY - 18 + 'px';
+  });
+  document.querySelectorAll('a, button, .svc-card, .ind-chip, .team-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cur.style.transform = 'scale(2)';
+      ring.style.transform = 'scale(1.4)';
+      ring.style.borderColor = 'rgba(182,110,255,0.9)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cur.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+      ring.style.borderColor = 'rgba(182,110,255,0.5)';
+    });
+  });
+
+  // Reveal on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Industry chips
+  document.querySelectorAll('.ind-chip').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('.ind-chip').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+    });
+  });
+
+  // Page dots
+  const sections = ['hero','industries','services','about','testi','contact'];
+  const dots = document.querySelectorAll('.pd');
+  const sEls = sections.map(id => document.getElementById(id) || document.querySelector('.' + id));
+  const dObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = sEls.indexOf(e.target);
+        if (i >= 0) { dots.forEach(d => d.classList.remove('on')); dots[i]?.classList.add('on'); }
+      }
+    });
+  }, { threshold: 0.4 });
+  sEls.forEach(el => el && dObs.observe(el));
+
+  function scrollTo(i) { sEls[i]?.scrollIntoView({ behavior: 'smooth' }); }
+
+  // Form submit
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    this.textContent = '✓ Message Sent!';
+    this.style.background = 'linear-gradient(135deg, #2E8B57, #2A9D6F)';
+    setTimeout(() => {
+      this.textContent = 'Send Message →';
+      this.style.background = '';
+    }, 3000);
+  });
+</script>
+</body>
+</html>
